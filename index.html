@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- Load deepar.js -->
+  <script src="https://cdn.jsdelivr.net/npm/deepar/js/deepar.js"> </script>
+
+</head>
+<body>
+     <!-- Canvas element for AR preview -->
+  <canvas width="640" height="360" id="deepar-canvas"></canvas>
+  <!-- Initialize DeepAR and load AR effect/filter -->
+  <script>
+    (async function() {
+      const deepAR = await deepar.initialize({
+        licenseKey: 'your_license_key_here',
+        canvas: document.getElementById('deepar-canvas'),
+        effect: 'https://cdn.jsdelivr.net/npm/deepar/effects/aviators'
+      });
+    })();
+  </script>
+</body>
+</html>
