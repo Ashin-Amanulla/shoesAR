@@ -3,31 +3,30 @@
     <!-- Load deepar.js -->
     <script src="https://cdn.jsdelivr.net/npm/deepar/js/deepar.js"></script>
     <style>
-        .canvas-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+      .canvas-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
 
-.canvas-container canvas {
-  max-width: 100%;
-  max-height: 100%;
-}
-h2{
-    text-align: center;
-    padding-top: 50px;
-}
+      .canvas-container canvas {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      h2 {
+        text-align: center;
+        padding-top: 50px;
+      }
     </style>
   </head>
 
   <body>
-
     <h2>Try On!</h2>
     <!-- Canvas element for AR preview -->
     <div class="canvas-container">
-        <canvas id="deepar-canvas"></canvas>
-      </div>
+      <canvas id="deepar-canvas"></canvas>
+    </div>
     <!-- Initialize DeepAR and load AR effect/filter -->
     <script>
       (async function () {
@@ -41,23 +40,30 @@ h2{
         canvas.width = Math.floor(canvasSize.width * dpr);
         canvas.height = Math.floor(canvasSize.height * dpr);
 
+        const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
+        const videoConstraints = {
+          facingMode: isMobileDevice ? { exact: "environment" } : "user",
+        };
         const deepAR = await deepar.initialize({
-          licenseKey: "391c09d3440eb0a0b517328593799e4adb94ac68298d6d48c53fa93113c2ff50f029f67a58382b87",
+          licenseKey:
+            "391c09d3440eb0a0b517328593799e4adb94ac68298d6d48c53fa93113c2ff50f029f67a58382b87",
           canvas,
           effect: "https://cdn.jsdelivr.net/npm/deepar/effects/Shoe",
+          videoConstraints,
         });
 
         // Center the canvas on mobile screens
-  function centerCanvas() {
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-    const canvasHeight = canvasContainer.offsetHeight;
-    const offset = Math.max((windowHeight - canvasHeight) / 2, 0);
-    canvasContainer.style.marginTop = offset + "px";
-  }
+        function centerCanvas() {
+          const windowHeight =
+            window.innerHeight || document.documentElement.clientHeight;
+          const canvasHeight = canvasContainer.offsetHeight;
+          const offset = Math.max((windowHeight - canvasHeight) / 2, 0);
+          canvasContainer.style.marginTop = offset + "px";
+        }
 
-  centerCanvas();
+        centerCanvas();
 
-  window.addEventListener("resize", centerCanvas);
+        window.addEventListener("resize", centerCanvas);
       })();
     </script>
   </body>
