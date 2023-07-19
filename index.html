@@ -2,18 +2,39 @@
   <head>
     <!-- Load deepar.js -->
     <script src="https://cdn.jsdelivr.net/npm/deepar/js/deepar.js"></script>
+    <style>
+        .canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.canvas-container canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+h2{
+    text-align: center;
+    padding-top: 50px;
+}
+    </style>
   </head>
 
   <body>
+
+    <h2>Try On!</h2>
     <!-- Canvas element for AR preview -->
-    <canvas id="deepar-canvas"></canvas>
+    <div class="canvas-container">
+        <canvas id="deepar-canvas"></canvas>
+      </div>
     <!-- Initialize DeepAR and load AR effect/filter -->
     <script>
       (async function () {
         const canvas = document.getElementById("deepar-canvas");
-
+        const canvasContainer = document.querySelector(".canvas-container");
         // Set canvas size, accounting screen resolution (to make it look 🤌 even on high definition displays)
-        const canvasSize = { width: 640, height: 360 };
+        const canvasSize = { width: 600, height: 600 };
         const dpr = window.devicePixelRatio || 1;
         canvas.style.maxWidth = `${canvasSize.width}px`;
         canvas.style.maxHeight = `${canvasSize.height}px`;
@@ -25,6 +46,18 @@
           canvas,
           effect: "https://cdn.jsdelivr.net/npm/deepar/effects/Shoe",
         });
+
+        // Center the canvas on mobile screens
+  function centerCanvas() {
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const canvasHeight = canvasContainer.offsetHeight;
+    const offset = Math.max((windowHeight - canvasHeight) / 2, 0);
+    canvasContainer.style.marginTop = offset + "px";
+  }
+
+  centerCanvas();
+
+  window.addEventListener("resize", centerCanvas);
       })();
     </script>
   </body>
