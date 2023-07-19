@@ -40,16 +40,17 @@
         canvas.width = Math.floor(canvasSize.width * dpr);
         canvas.height = Math.floor(canvasSize.height * dpr);
 
-        const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
-        const videoConstraints = {
-          facingMode: isMobileDevice ? { exact: "environment" } : "user",
-        };
+      
         const deepAR = await deepar.initialize({
           licenseKey:
             "391c09d3440eb0a0b517328593799e4adb94ac68298d6d48c53fa93113c2ff50f029f67a58382b87",
           canvas,
           effect: "https://cdn.jsdelivr.net/npm/deepar/effects/Shoe",
-          videoConstraints,
+          additionalOptions: {
+            cameraConfig: {
+              facingMode: "environment",
+            },
+          },
         });
 
         // Center the canvas on mobile screens
