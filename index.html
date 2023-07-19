@@ -1,26 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html>
+  <head>
+    <!-- Load deepar.js -->
+    <script src="https://cdn.jsdelivr.net/npm/deepar/js/deepar.js"></script>
+  </head>
 
-     <!-- Load deepar.js -->
-  <script src="https://cdn.jsdelivr.net/npm/deepar/js/deepar.js"> </script>
+  <body>
+    <!-- Canvas element for AR preview -->
+    <canvas id="deepar-canvas"></canvas>
+    <!-- Initialize DeepAR and load AR effect/filter -->
+    <script>
+      (async function () {
+        const canvas = document.getElementById("deepar-canvas");
 
-</head>
-<body>
-     <!-- Canvas element for AR preview -->
-  <canvas width="640" height="360" id="deepar-canvas"></canvas>
-  <!-- Initialize DeepAR and load AR effect/filter -->
-  <script>
-    (async function() {
-      const deepAR = await deepar.initialize({
-        licenseKey: '391c09d3440eb0a0b517328593799e4adb94ac68298d6d48c53fa93113c2ff50f029f67a58382b87',
-        canvas: document.getElementById('deepar-canvas'),
-        effect: 'https://cdn.jsdelivr.net/npm/deepar/effects/aviators'
-      });
-    })();
-  </script>
-</body>
+        // Set canvas size, accounting screen resolution (to make it look 🤌 even on high definition displays)
+        const canvasSize = { width: 640, height: 360 };
+        const dpr = window.devicePixelRatio || 1;
+        canvas.style.maxWidth = `${canvasSize.width}px`;
+        canvas.style.maxHeight = `${canvasSize.height}px`;
+        canvas.width = Math.floor(canvasSize.width * dpr);
+        canvas.height = Math.floor(canvasSize.height * dpr);
+
+        const deepAR = await deepar.initialize({
+          licenseKey: "391c09d3440eb0a0b517328593799e4adb94ac68298d6d48c53fa93113c2ff50f029f67a58382b87",
+          canvas,
+          effect: "https://cdn.jsdelivr.net/npm/deepar/effects/aviators",
+        });
+      })();
+    </script>
+  </body>
 </html>
